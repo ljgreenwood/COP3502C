@@ -32,7 +32,11 @@ class Pakudex:
 
     def get_stats(self, species):
         try:
-            for pakuri_obj in self.pocket: # object of species (will exit if KeyError) (species isn't found)
+            for (
+                pakuri_obj
+            ) in (
+                self.pocket
+            ):  # object of species (will exit if KeyError) (species isn't found)
                 if pakuri_obj.get_species() == species:
                     return [
                         pakuri_obj.get_attack(),
@@ -44,8 +48,12 @@ class Pakudex:
 
     def evolve_species(self, species):
         try:
-            for pakuri_obj in self.pocket: # pakuri object of species (will exit if KeyError - species not found)
-                if pakuri_obj.get_species() == species:  
+            for (
+                pakuri_obj
+            ) in (
+                self.pocket
+            ):  # pakuri object of species (will exit if KeyError - species not found)
+                if pakuri_obj.get_species() == species:
                     pakuri_obj.evolve()  # call pakuri evolve method
                     return True
         except:
@@ -57,3 +65,11 @@ class Pakudex:
             return True
         except:
             return False
+
+
+# paku = Pakudex()
+# paku.add_pakuri('wefwkfajsdlfjaslkd')
+# paku.add_pakuri('pijaku')
+# print(paku.get_species_array())
+# paku.sort_pakuri()
+# print(paku.get_species_array())

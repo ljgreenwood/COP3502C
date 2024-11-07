@@ -44,9 +44,11 @@ Pakudex Main Menu
         while True:
             self.menu()
             # Input action (selection)
-            action = self.get_int_input(msg="What would you like to do? ", err_msg="Unrecognized menu selection!")
+            action = self.get_int_input(
+                msg="What would you like to do? ",
+                err_msg="Unrecognized menu selection!",
+            )
             print(action)
-
 
 
 def main():
