@@ -5,8 +5,8 @@ class Pakuri:
         self.defense = (len(species) * 5) + 17
         self.speed = (len(species) * 6) + 13
 
-    def __lt__(self):
-        return self.species < self.species
+    def __lt__(self, other):
+        return self.species < other.species
 
     def get_species(self):  # return species
         return self.species
