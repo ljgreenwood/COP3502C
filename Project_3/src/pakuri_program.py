@@ -48,7 +48,24 @@ Pakudex Main Menu
                 msg="What would you like to do? ",
                 err_msg="Unrecognized menu selection!",
             )
-            print(action)
+            if action == 1:
+                try:
+                    assert self.pakudex.get_species_array() != None
+                    print
+                except AssertionError:
+                    print("No Pakuri in Pakudex yet!")
+                except Exception as e:
+                    print("Unknown Error: ", e)
+            if action == 2:
+                pass
+            if action == 3:
+                try:
+                    assert self.pakudex.get_species_array() != False
+                    print("Pakuri species Pikabu successfully added!")
+                except AssertionError:
+                    print("No Pakuri in Pakudex yet!")
+                except Exception as e:
+                    print("Unknown Error: ", e)
 
 
 def main():

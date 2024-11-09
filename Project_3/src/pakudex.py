@@ -2,17 +2,29 @@ from pakuri import Pakuri
 
 
 class Pakudex:
-    def __init__(self, capacity=20):
+    def __init__(self, capacity: int = 20):
+        """
+        initializes the capacity (default value 20) and the list of pakuri (pocket)
+        """
         self.capacity = capacity  # total capacity of pakudex
         self.pocket = []  # list of pakuri (len(**) = size)
 
     def get_size(self):
+        """
+        returns the length of the pocket list
+        """
         return len(self.pocket)
 
-    def get_capacity(self):
+    def get_capacity(self) -> int:
+        """
+        returns the self.capacity value given in initialization
+        """
         return self.capacity
 
-    def add_pakuri(self, species):
+    def add_pakuri(self, species) -> bool:
+        """
+        attempt to add pakuri to the list (in order of adding -- not sorted), returns success/failure bool
+        """
         try:
             self.pocket.append(
                 Pakuri(species)
@@ -22,6 +34,9 @@ class Pakudex:
             return False  # unsuccessful in adding the Pakuri to the pocket
 
     def get_species_array(self):
+        """
+        returns none if there is not species in the array, else returns the list
+        """
         try:  # attempt at getting list
             temp = [pakuri_inst.get_species() for pakuri_inst in self.pocket]
             # access the keys of the pakuri pocket dict and cast to a list
