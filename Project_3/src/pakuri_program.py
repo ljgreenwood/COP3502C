@@ -1,7 +1,7 @@
 from pakudex import Pakudex
-import logging
+# import logging
 
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
 
 # TODO: Before submitting program... branch and check how ChatGPT would reformat this code! (still submit the original but learn from the reformatting)
 
@@ -55,9 +55,14 @@ Pakudex Main Menu
                 if temp > 6 or temp < 1:
                     raise ValueError("Selections must be in range")
                 action = temp
-            except:
+            except (
+                ValueError
+            ) as ve:  # Both the specified ValueError and the temp input ValueError may be raised
                 print("Unrecognized menu selection!")
+                # logging.debug(ve)
                 continue  # restart loop without going through program logic
+            # except Exception as e:
+            #     logging.debug(e)
             # START ACTION SELECTION LOGIC!
             if action == 1:  # LIST PAKURI
                 try:
@@ -85,9 +90,9 @@ Pakudex Main Menu
                     )
                 except AssertionError as ae:
                     print("Error: No such Pakuri!")
-                    logging.debug(ae)
-                except IndexError as ie:
-                    logging.debug(ie)
+                    # logging.debug(ae)
+                # except IndexError as ie:
+                #     logging.debug(ie)
 
             if action == 3:  # ADD PAKURI
                 try:
@@ -110,10 +115,13 @@ Pakudex Main Menu
                     assert isinstance(
                         self.pakudex.evolve_species(pakuri_sel), bool
                     ), "Error: No such Pakuri!"
+                    print(f"{pakuri_sel} has evolved!")
                 except AssertionError as ae:
                     print(ae)
 
-            if action == 5:  # SORT PAKURI
+            if (
+                action == 5
+            ):  # SORT PAKURI ::MAY HAVE TO MODIFY IF EXCEPTION FOR EMPTY PAKURI LIST::
                 try:
                     assert self.pakudex.sort_pakuri() == True, "Error in sorting Pakuri"
                     print("Pakuri have been sorted!")
