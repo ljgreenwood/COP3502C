@@ -21,16 +21,23 @@ class Pakudex:
         """
         return self.capacity
 
-    def add_pakuri(self, species) -> bool:
+    def add_pakuri(self, species: str) -> bool:
         """
         attempt to add pakuri to the list (in order of adding -- not sorted), returns success/failure bool
         """
         try:
+            temp = (
+                self.get_species_array()
+            )  # ENSURING THAT TEMP IS A LIST FOR ASSERTIONS
+            if not isinstance(temp, list):
+                temp = []
+
+            assert species not in temp, "Duplicate!"
             self.pocket.append(
                 Pakuri(species)
             )  # will exit the try when an error is raised
             return True
-        except:
+        except Exception as e:
             return False  # unsuccessful in adding the Pakuri to the pocket
 
     def get_species_array(self):
@@ -82,9 +89,12 @@ class Pakudex:
             return False
 
 
-# paku = Pakudex()
-# paku.add_pakuri('wefwkfajsdlfjaslkd')
-# paku.add_pakuri('pijaku')
-# print(paku.get_species_array())
-# paku.sort_pakuri()
-# print(paku.get_species_array())
+def main():
+    paku = Pakudex()
+    paku.add_pakuri("wefwkfajsdlfjaslkd")
+    paku.add_pakuri("pijaku")
+    paku.add_pakuri("pijaku")
+
+
+if __name__ == "__main__":
+    main()

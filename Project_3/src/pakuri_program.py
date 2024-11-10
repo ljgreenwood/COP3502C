@@ -1,9 +1,10 @@
 from pakudex import Pakudex
+
 # import logging
 
 # logging.basicConfig(level=logging.DEBUG)
 
-# TODO: Before submitting program... branch and check how ChatGPT would reformat this code! (still submit the original but learn from the reformatting)
+# TODO: After submitting program... branch and check how ChatGPT would reformat this code! (still submit the original but learn from the reformatting)
 
 
 class Program:
@@ -100,9 +101,7 @@ Pakudex Main Menu
                         self.pakudex.get_size() < self.pakudex.get_capacity()
                     ), "Error: Pakudex is full!"
                     pakuri_sel = input("Enter the name of the species to add: ")
-                    assert (
-                        self.pakudex.add_pakuri(pakuri_sel) == True
-                    ), "Error in adding Pakuri"
+                    assert self.pakudex.add_pakuri(pakuri_sel) == True, "No Duplicates!"
                     print(f"Pakuri species {pakuri_sel} successfully added!")
                 except AssertionError as ae:
                     print(ae)
