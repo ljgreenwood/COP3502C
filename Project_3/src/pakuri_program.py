@@ -1,5 +1,7 @@
 from pakudex import Pakudex
 
+# TODO: Before submitting program... branch and check how ChatGPT would reformat this code! (still submit the original but learn from the reformatting)
+
 
 class Program:
     # Prompt for input
@@ -23,6 +25,10 @@ Pakudex Main Menu
         )
 
     def get_int_input(self, msg: str, err_msg: str = "Error") -> int:
+        """
+        sanity check input fetching function. prints the given error message for invalid inputs as specified
+        I love typed function parameters!
+        """
         while True:
             try:
                 temp = int(input(msg))  # No default value
@@ -34,24 +40,28 @@ Pakudex Main Menu
     def run(self):
         # Display a welcome message
         print("Welcome to Pakudex: Tracker Extraordinaire!")
-        # Prompt for / read pakudex capacity
+        # Prompt for / read pakudex capacity -> must return int so use get_int_input()
         self.pakudex.capacity = self.get_int_input(
             msg="Enter max capacity of the Pakudex: ",
             err_msg="Please enter a valid size.",
         )
-        print(f"The Pakudex can hold {self.pakudex.capacity} species of Pakuri.")
+        print(
+            f"The Pakudex can hold {self.pakudex.capacity} species of Pakuri."
+        )  # Print statement to show capacity of Pakudex
         # Display menu
         while True:
             self.menu()
-            # Input action (selection)
+            # Input action (selection) -> again must return int so use get_int_input()
             action = self.get_int_input(
                 msg="What would you like to do? ",
                 err_msg="Unrecognized menu selection!",
             )
-            if action == 1:
+            if action == 1:  #
                 try:
-                    result = self.pakudex.get_species_array() 
-                    assert result != None # raise AssertionError if the program returns "None"
+                    result = self.pakudex.get_species_array()
+                    assert (
+                        result != None
+                    )  # raise AssertionError if the program returns "None"
                     print("Pakuri In Pakudex: ")
                     for i in range(len(result)):
                         print(f"{i+1}. {result[i]}")
