@@ -27,33 +27,22 @@ Pakudex Main Menu
 """
         )
 
-    def get_int_input(self, msg: str, loop_Q: bool = True, err_msg: str = "Error"):
-        """
-        sanity check input fetching function. prints the given error message for invalid inputs as specified
-        I love typed function parameters!
-        """
-        while loop_Q:
-            try:
-                temp = int(input(msg))  # No default value
-                if temp > 6 or temp < 1:
-                    raise ValueError("Selections must be in range")
-            except:  # catch :: all exceptions
-                print(err_msg)  # Error by default
-            return temp
-
     def run(self):
         # Display a welcome message
         print("Welcome to Pakudex: Tracker Extraordinaire!")
         # Prompt for / read pakudex capacity -> must return int so use get_int_input()
         while True:
             try:
-                temp = int(input("Enter max capacity of the Pakudex: "))  # No default value
-                if temp > 6 or temp < 1:
-                    raise ValueError("Selections must be in range")
-                break
+                temp = int(
+                    input("Enter max capacity of the Pakudex: ")
+                )  #  if the entered type is incorrect,
+                if temp < 1:
+                    raise ValueError("Invalid Pakudex Size")
+                # if no exceptions are raised above, set the capacity to the temp value
+                self.pakudex.capacity = temp
+                break  # exit loop for values
             except:  # catch :: all exceptions
                 print("Please enter a valid size.")  # Error by default
-            self.pakudex.capacity = temp
         print(
             f"The Pakudex can hold {self.pakudex.capacity} species of Pakuri."
         )  # Print statement to show capacity of Pakudex
@@ -61,11 +50,14 @@ Pakudex Main Menu
         while True:
             self.menu()
             # Input action (selection) -> again must return int so use get_int_input()
-            action = self.get_int_input(
-                msg="What would you like to do? ",
-                loop_Q=False,
-                err_msg="Unrecognized menu selection!",
-            )
+            try:
+                temp = int(input("What would you like to do? "))  # No default value
+                if temp > 6 or temp < 1:
+                    raise ValueError("Selections must be in range")
+                action = temp
+            except:
+                print("Unrecognized menu selection!")
+                continue  # restart loop without going through program logic
             # START ACTION SELECTION LOGIC!
             if action == 1:  # LIST PAKURI
                 try:
