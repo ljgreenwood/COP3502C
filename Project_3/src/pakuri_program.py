@@ -27,27 +27,33 @@ Pakudex Main Menu
 """
         )
 
-    def get_int_input(self, msg: str, err_msg: str = "Error") -> int:
+    def get_int_input(self, msg: str, loop_Q: bool = True, err_msg: str = "Error"):
         """
         sanity check input fetching function. prints the given error message for invalid inputs as specified
         I love typed function parameters!
         """
-        while True:
+        while loop_Q:
             try:
                 temp = int(input(msg))  # No default value
-                break
-            except:
+                if temp > 6 or temp < 1:
+                    raise ValueError("Selections must be in range")
+            except:  # catch :: all exceptions
                 print(err_msg)  # Error by default
-        return temp
+            return temp
 
     def run(self):
         # Display a welcome message
         print("Welcome to Pakudex: Tracker Extraordinaire!")
         # Prompt for / read pakudex capacity -> must return int so use get_int_input()
-        self.pakudex.capacity = self.get_int_input(
-            msg="Enter max capacity of the Pakudex: ",
-            err_msg="Please enter a valid size.",
-        )
+        while True:
+            try:
+                temp = int(input("Enter max capacity of the Pakudex: "))  # No default value
+                if temp > 6 or temp < 1:
+                    raise ValueError("Selections must be in range")
+                break
+            except:  # catch :: all exceptions
+                print("Please enter a valid size.")  # Error by default
+            self.pakudex.capacity = temp
         print(
             f"The Pakudex can hold {self.pakudex.capacity} species of Pakuri."
         )  # Print statement to show capacity of Pakudex
@@ -57,6 +63,7 @@ Pakudex Main Menu
             # Input action (selection) -> again must return int so use get_int_input()
             action = self.get_int_input(
                 msg="What would you like to do? ",
+                loop_Q=False,
                 err_msg="Unrecognized menu selection!",
             )
             # START ACTION SELECTION LOGIC!
@@ -78,9 +85,11 @@ Pakudex Main Menu
                 try:
                     pakuri_sel = input("Enter the name of the species to display: ")
                     result = self.pakudex.get_stats(pakuri_sel)
-                    assert result != None, "No Pakuri Found"
+                    assert isinstance(
+                        result, list
+                    ), "No Pakuri Found"  # Will raise an assertion error if the result is not a list
                     print(
-                        f"Species: {pakuri_sel[0]}\nAttack: {pakuri_sel[1]}\nDefense: {pakuri_sel[2]}\nSpeed: {pakuri_sel[3]}"
+                        f"Species: {pakuri_sel}\nAttack: {result[0]}\nDefense: {result[1]}\nSpeed: {result[2]}"
                     )
                 except AssertionError as ae:
                     print("Error: No such Pakuri!")
@@ -90,21 +99,37 @@ Pakudex Main Menu
 
             if action == 3:  # ADD PAKURI
                 try:
+                    assert (
+                        self.pakudex.get_size() < self.pakudex.get_capacity()
+                    ), "Error: Pakudex is full!"
                     pakuri_sel = input("Enter the name of the species to add: ")
-                    assert self.pakudex.add_pakuri(pakuri_sel) != False
+                    assert (
+                        self.pakudex.add_pakuri(pakuri_sel) == True
+                    ), "Error in adding Pakuri"
                     print(f"Pakuri species {pakuri_sel} successfully added!")
-                except AssertionError:
-                    print("No Pakuri in Pakudex yet!")
+                except AssertionError as ae:
+                    print(ae)
                 except Exception as e:
                     print("Unknown Error: ", e)
 
             if action == 4:  # EVOLVE PAKURI
-                pass
+                try:
+                    pakuri_sel = input("Enter the name of the species to evolve: ")
+                    assert isinstance(
+                        self.pakudex.evolve_species(pakuri_sel), bool
+                    ), "Error: No such Pakuri!"
+                except AssertionError as ae:
+                    print(ae)
 
             if action == 5:  # SORT PAKURI
-                pass
+                try:
+                    assert self.pakudex.sort_pakuri() == True, "Error in sorting Pakuri"
+                    print("Pakuri have been sorted!")
+                except AssertionError as ae:
+                    print(ae)
 
             if action == 6:  # EXIT
+                print("Thanks for using Pakudex! Bye!")
                 break  # only way to exit input menu loop
 
 
