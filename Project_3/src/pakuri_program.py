@@ -1,4 +1,7 @@
 from pakudex import Pakudex
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 # TODO: Before submitting program... branch and check how ChatGPT would reformat this code! (still submit the original but learn from the reformatting)
 
@@ -56,7 +59,8 @@ Pakudex Main Menu
                 msg="What would you like to do? ",
                 err_msg="Unrecognized menu selection!",
             )
-            if action == 1:  #
+            # START ACTION SELECTION LOGIC!
+            if action == 1:  # LIST PAKURI
                 try:
                     result = self.pakudex.get_species_array()
                     assert (
@@ -69,20 +73,39 @@ Pakudex Main Menu
                     print("No Pakuri in Pakudex yet!")
                 except Exception as e:
                     print("Unknown Error: ", e)
-            # if action == 2:
-            #     try:
-            #         assert self.pakudex.get_species_array() != None
-            #         print("Error: No such Pakuri!")
-            #     except:
-            #         pass
-            # if action == 3:
-            #     try:
-            #         assert self.pakudex.add_pakuri() != False
-            #         print("Pakuri species Pikabu successfully added!")
-            #     except AssertionError:
-            #         print("No Pakuri in Pakudex yet!")
-            #     except Exception as e:
-            #         print("Unknown Error: ", e)
+
+            if action == 2:  # SHOW PAKURI
+                try:
+                    pakuri_sel = input("Enter the name of the species to display: ")
+                    result = self.pakudex.get_stats(pakuri_sel)
+                    assert result != None, "No Pakuri Found"
+                    print(
+                        f"Species: {pakuri_sel[0]}\nAttack: {pakuri_sel[1]}\nDefense: {pakuri_sel[2]}\nSpeed: {pakuri_sel[3]}"
+                    )
+                except AssertionError as ae:
+                    print("Error: No such Pakuri!")
+                    logging.debug(ae)
+                except IndexError as ie:
+                    logging.debug(ie)
+
+            if action == 3:  # ADD PAKURI
+                try:
+                    pakuri_sel = input("Enter the name of the species to add: ")
+                    assert self.pakudex.add_pakuri(pakuri_sel) != False
+                    print(f"Pakuri species {pakuri_sel} successfully added!")
+                except AssertionError:
+                    print("No Pakuri in Pakudex yet!")
+                except Exception as e:
+                    print("Unknown Error: ", e)
+
+            if action == 4:  # EVOLVE PAKURI
+                pass
+
+            if action == 5:  # SORT PAKURI
+                pass
+
+            if action == 6:  # EXIT
+                break  # only way to exit input menu loop
 
 
 def main():
