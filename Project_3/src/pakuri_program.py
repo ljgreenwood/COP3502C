@@ -50,22 +50,29 @@ Pakudex Main Menu
             )
             if action == 1:
                 try:
-                    assert self.pakudex.get_species_array() != None
-                    print
+                    result = self.pakudex.get_species_array() 
+                    assert result != None # raise AssertionError if the program returns "None"
+                    print("Pakuri In Pakudex: ")
+                    for i in range(len(result)):
+                        print(f"{i+1}. {result[i]}")
                 except AssertionError:
                     print("No Pakuri in Pakudex yet!")
                 except Exception as e:
                     print("Unknown Error: ", e)
-            if action == 2:
-                pass
-            if action == 3:
-                try:
-                    assert self.pakudex.get_species_array() != False
-                    print("Pakuri species Pikabu successfully added!")
-                except AssertionError:
-                    print("No Pakuri in Pakudex yet!")
-                except Exception as e:
-                    print("Unknown Error: ", e)
+            # if action == 2:
+            #     try:
+            #         assert self.pakudex.get_species_array() != None
+            #         print("Error: No such Pakuri!")
+            #     except:
+            #         pass
+            # if action == 3:
+            #     try:
+            #         assert self.pakudex.add_pakuri() != False
+            #         print("Pakuri species Pikabu successfully added!")
+            #     except AssertionError:
+            #         print("No Pakuri in Pakudex yet!")
+            #     except Exception as e:
+            #         print("Unknown Error: ", e)
 
 
 def main():
